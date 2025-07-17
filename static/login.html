@@ -1,0 +1,95 @@
+<!doctype html>
+<html class="root-html">
+  <head>
+    <meta charset="utf-8" />
+    <title>Web Gallery - Login</title>
+    <link href="styles/cols.css" rel="stylesheet" />
+    <link href="styles/form.css" rel="stylesheet" />
+    <link href="styles/main.css" rel="stylesheet" />
+    <style>
+      .login-container {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .login-title {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 24px;
+        color: #333;
+      }
+
+      .button-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+      }
+
+      .error-box {
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        visibility: hidden;
+      }
+
+      .error-box.error {
+        background-color: #ffdddd;
+        color: #ff0000;
+      }
+
+      .error-box.success {
+        background-color: #ddffdd;
+        color: #00aa00;
+      }
+    </style>
+  </head>
+  <body class="app-body">
+    <div class="login-container">
+      <h1 class="login-title">Web Gallery</h1>
+
+      <div id="error-box" class="error-box">Error message will appear here</div>
+
+      <form>
+        <input type="hidden" name="action" value="signin" />
+
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            class="form-element"
+            required
+            placeholder="Enter your username"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="form-element"
+            required
+            placeholder="Enter your password"
+          />
+        </div>
+
+        <div class="button-container">
+          <button type="button" id="signin" class="btn">Sign In</button>
+          <button type="button" id="signup" class="btn">Sign Up</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="loading-overlay" id="loadingOverlay">Loading...</div>
+
+    <script src="js/api-service.js"></script>
+    <script src="js/login.js"></script>
+  </body>
+</html>

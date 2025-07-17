@@ -1,0 +1,103 @@
+<!doctype html>
+<html class="root-html">
+  <head>
+    <meta charset="utf-8" />
+    <title>Web Gallery</title>
+    <link href="styles/cols.css" rel="stylesheet" />
+    <link href="styles/form.css" rel="stylesheet" />
+    <link href="styles/image.css" rel="stylesheet" />
+    <link href="styles/main.css" rel="stylesheet" />
+    <link href="styles/states.css" rel="stylesheet" />
+  </head>
+  <body class="app-body">
+    <div class="toolbar">
+      <div class="toggle-container">
+        <label for="formToggle" class="toggle-label">Add Image</label>
+        <label class="switch">
+          <input type="checkbox" id="formToggle" />
+          <span class="slider round"></span>
+        </label>
+      </div>
+
+      <form class="horizontal-form hidden-form" id="addImageForm">
+        <input
+          type="text"
+          id="newImageTitle"
+          class="form-element"
+          placeholder="Enter Image Title"
+          name="imageTitle"
+          required
+        />
+        <input
+          type="file"
+          id="newImageFile"
+          class="form-element"
+          name="image"
+          accept="image/*"
+          required
+        />
+        <button type="submit" class="btn">Done</button>
+      </form>
+
+      <div class="gallery-selector">
+        <label for="userGallery">Browse Gallery: </label>
+        <select id="userGallery" class="form-element">
+          <option value="all">All Images</option>
+          <!-- User galleries will be populated here -->
+        </select>
+      </div>
+
+      <div id="userInfo" class="user-info">
+        <!-- Will be populated by JS -->
+      </div>
+    </div>
+
+    <div class="image-display row">
+      <div class="image-area col-8">
+        <div class="image-title">Add Images Above</div>
+        <div class="image-author"></div>
+
+        <div class="image-frame">
+          <div class="image-placeholder">Gallery Empty</div>
+        </div>
+
+        <div class="image-footer">
+          <div class="image-controls">
+            <button class="icon-btn prev-btn" id="prevBtn"></button>
+            <button class="icon-btn next-btn" id="nextBtn"></button>
+          </div>
+          <div class="image-count" id="imageCount">0/0</div>
+          <button class="icon-btn delete-btn" id="deleteBtn"></button>
+        </div>
+      </div>
+
+      <div class="comment-section col-4">
+        <h2 class="comment-title">Comments</h2>
+        <form id="addCommentForm" class="comment-form">
+          <textarea
+            id="commentContent"
+            class="form-element"
+            placeholder="Your Comment"
+            rows="2"
+            required
+          ></textarea>
+          <button type="submit" class="btn">Post</button>
+        </form>
+
+        <div class="comment-list" id="commentList"></div>
+        <div class="comment-page-count" id="commentPageCount">0/0</div>
+        <div class="comment-navigation">
+          <button id="prevCommentBtn" class="icon-btn left-btn-cmt"></button>
+          <button id="nextCommentBtn" class="icon-btn right-btn-cmt"></button>
+        </div>
+      </div>
+    </div>
+    <div class="loading-overlay" id="loadingOverlay">Loading...</div>
+    <footer class="page-footer">
+      <a href="/credits.html" class="footer-link">credits</a>
+    </footer>
+    <script src="js/meact.js"></script>
+    <script src="js/api-service.js"></script>
+    <script src="js/index.js"></script>
+  </body>
+</html>

@@ -1,0 +1,207 @@
+openapi: 1.0.0
+info:
+  title: Web Gallery API
+  version: 1.0.0
+  description: REST API for managing images and comments in a gallery.
+servers:
+  - url: /api
+
+paths:
+  /images:
+    post:
+      summary: Upload a new image
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                author:
+                  type: string
+                image:
+                  type: string
+                  format: binary
+              required:
+                - title
+                - author
+                - image
+      responses:
+        "201":
+          description: Image created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Image"
+        "400":
+          description: Missing required fields
+        "500":
+          description: Failed to create image
+
+    get:
+      summary: Retrieve a paginated list of images
+      parameters:
+        - name: offset
+          in: query
+          schema:
+            type: integer
+          description: Offset for pagination
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          description: Number of items per page
+      responses:
+        "200":
+          description: List of images
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Image"
+
+  /images/{id}:
+    get:
+      summary: Get image by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Image retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Image"
+        "404":
+          description: Image not found
+
+    delete:
+      summary: Delete image by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Image deleted
+        "404":
+          description: Image not found
+
+  /comments:
+    post:
+      summary: Add a comment to an image
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                author:
+                  type: string
+                content:
+                  type: string
+                imageId:
+                  type: integer
+              required:
+                - author
+                - content
+                - imageId
+      responses:
+        "201":
+          description: Comment added successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Comment"
+        "400":
+          description: Missing fields
+        "404":
+          description: Image not found
+        "500":
+          description: Failed to add comment
+
+    get:
+      summary: Get paginated comments for an image
+      parameters:
+        - name: imageId
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of comments
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  comments:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Comment"
+
+  /comments/{id}:
+    delete:
+      summary: Delete comment by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Comment deleted successfully
+        "404":
+          description: Comment not found
+
+components:
+  schemas:
+    Image:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        author:
+          type: string
+        url:
+          type: string
+        date:
+          type: string
+          format: date-time
+
+    Comment:
+      type: object
+      properties:
+        id:
+          type: integer
+        author:
+          type: string
+        content:
+          type: string
+        date:
+          type: string
+          format: date-time
+        ImageId:
+          type: integer
